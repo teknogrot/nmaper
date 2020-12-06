@@ -2,8 +2,11 @@
 
 # A simple script to automate the port enumeration process as described on the Hack The Box website #
 
-ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
-nmap -sC -sV -p$ports $1 -oA $2
+input=$1
+output=$1+"_results"
+ports=$(nmap -p- --min-rate=1000 -T4 $input | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
+echo "Ports found on $input are: $ports"
+nmap -sC -sV -p$ports $input -oA $input
 
 usage()
 {
